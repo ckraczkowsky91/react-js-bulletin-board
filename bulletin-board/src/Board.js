@@ -23,7 +23,7 @@ class Board extends Component {
     var self = this
     if(this.props.count) {
 // we must use back ticks "``" when using {} in a URL which are called "template literals"
-// we are using template literals to pass the count property of the Board compontent to the baconipsum API that we fetched 
+// we are using template literals to pass the count property of the Board compontent to the baconipsum API that we fetched
       fetch(`https://baconipsum.com/api/?type=all-meat&sentences=${this.props.count}`)
         .then(response => response.json())
         .then(json => json[0]
@@ -37,7 +37,7 @@ class Board extends Component {
       notes: [
         ...prevState.notes,
         {
-          id: this.nextId,
+          id: this.nextId(),
           note: text
         }
       ]
@@ -73,8 +73,8 @@ class Board extends Component {
 
   eachNote(note, i) {
     return (
-      <Note key={i}
-            index={i}
+      <Note key={note.id}
+            index={note.id}
             onChange={this.update}
 // now we have to add the remove() function that we defined above to the onRemove() function of the Note component
             onRemove={this.remove}>
