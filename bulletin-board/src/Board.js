@@ -24,6 +24,7 @@ class Board extends Component {
     }
     this.eachNote = this.eachNote.bind(this)
     this.update = this.update.bind(this)
+    this.remove = this.remove.bind(this)
   }
 
   update(newText, i) {
@@ -35,11 +36,25 @@ class Board extends Component {
     }))
   }
 
+// adding a function to remove a Note Component
+  remove(id) {
+    console.log('removing item at', id)
+// below we use a callback function
+    this.setState(prevState => ({
+// we use the callback to reset the state of notes using the filter() function
+// filter passes in a note and performs a logical check
+// this will return an array that will return the array without the note containing that id
+      notes: prevState.notes.filter(note => note.id !== id)
+    }))
+  }
+
   eachNote(note, i) {
     return (
       <Note key={i}
             index={i}
-            onChange={this.update}>
+            onChange={this.update}
+// now we have to add the remove() function that we defined above to the onRemove() function of the Note component
+            onRemove={this.remove}>
             {note.note}
       </Note>
     )

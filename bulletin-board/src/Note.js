@@ -21,7 +21,11 @@ class Note extends Component {
     })
   }
   remove() {
-    alert('removing note')
+  // the remove() function is called when the trash can icon is clicked
+  // when this button is clicked we want to pass the index of the Note to the Board component to have it removed
+  // we are using a hack right now where we have predefined all of the Note components and them sequential ids of 0, 1, 2... so that it matches the index
+    this.props.onRemove(this.props.index)
+    alert(this.props.index)
   }
   save(e) {
     e.preventDefault()
