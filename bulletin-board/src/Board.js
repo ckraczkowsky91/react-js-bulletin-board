@@ -9,7 +9,7 @@ class Board extends Component {
   constructor(props) {
     super(props)
     this.state = {
-// getting rid of the array so that the Board component renders without any Note children components
+// we are going to load Note components into this variable using the fetch() method
       notes: []
     }
     this.eachNote = this.eachNote.bind(this)
@@ -17,6 +17,19 @@ class Board extends Component {
     this.remove = this.remove.bind(this)
     this.add = this.add.bind(this)
     this.nextId = this.nextId.bind(this)
+  }
+// using the componentWillMount() hook method will be envoked right before the Board is rendered
+  componentWillMount() {
+    var self = this
+    if(this.props.count) {
+// we must use back ticks "``" when using {} in a URL which are called "template literals"
+// we are using template literals to pass the count property of the Board compontent to the baconipsum API that we fetched 
+      fetch(`https://baconipsum.com/api/?type=all-meat&sentences=${this.props.count}`)
+        .then(response => response.json())
+        .then(json => json[0]
+                      .split(". ")
+                      .forEach(sentence => self.add(sentence.substring(0, 25))))
+    }
   }
 
   add(text) {
